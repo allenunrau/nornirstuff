@@ -1,0 +1,93 @@
+--- Command: sh ip int br | i up ---
+
+1/1/1            10.255.0.1/32             up/up
+1/1/2            10.255.0.1/32             up/up
+1/1/7            192.0.2.2/30              up/up
+loopback0        10.255.0.1/32             up/up
+
+========================================
+
+--- Command: sh ip route ---
+
+
+Displaying ipv4 routes selected for forwarding
+
+Origin Codes: C - connected, S - static, L - local
+              R - RIP, B - BGP, O - OSPF, D - DHCP
+              U - Unnumbered
+Type Codes:   E - External BGP, I - Internal BGP, V - VPN, EV - EVPN
+              IA - OSPF internal area, E1 - OSPF external type 1
+              E2 - OSPF external type 2   
+
+VRF: default
+
+Prefix              Nexthop                                  Interface     VRF(egress)       Origin/   Distance/    Age
+                                                                                             Type      Metric
+--------------------------------------------------------------------------------------------------------
+10.255.0.1/32       -                                        loopback0     -                 L         [0/0]        -            
+10.255.0.2/32       10.255.0.3                               1/1/1         -                 O         [110/200]    00h:34m:38s  
+                    10.255.0.4                               1/1/2         -                           [110/200]    00h:34m:38s  
+10.255.0.3/32       10.255.0.3                               1/1/1         -                 O         [110/100]    01h:48m:56s  
+10.255.0.4/32       10.255.0.4                               1/1/2         -                 O         [110/100]    01h:49m:02s  
+192.0.2.0/30        -                                        1/1/7         -                 C         [0/0]        -            
+192.0.2.2/32        -                                        1/1/7         -                 L         [0/0]        -            
+192.0.2.4/30        10.255.0.3                               1/1/1         -                 O         [110/300]    01h:06m:21s  
+                    10.255.0.4                               1/1/2         -                           [110/300]    01h:06m:21s  
+
+Total Route Count : 7
+
+
+========================================
+
+--- Command: sh ip ospf ---
+
+VRF : default                          Process  : 1
+----------------------------------------------------
+
+RouterID               : 10.255.0.1          OSPFv2                 : Enabled         
+BFD                    : Disabled            SPF Start Interval     : 200   ms
+SPF Hold Interval      : 1000  ms            SPF Max Wait Interval  : 5000  ms
+LSA Start Time         : 5000  ms            LSA Hold Time          : 0     ms
+LSA Max Wait Time      : 0     ms            LSA Arrival            : 1000  ms
+External LSAs          : 0                   Checksum Sum           : 0                   
+ECMP                   : 4                   Reference Bandwidth    : 100000 Mbps
+Area Border            : false               AS Border              : false
+GR Status              : Enabled             GR Interval            : 120 sec
+GR State               : inactive            GR Exit Status         : none            
+GR Helper              : Enabled             GR Strict LSA Check    : Enabled         
+GR Ignore Lost I/F     : Disabled            Internal Process ID    : 1 
+Summary address:
+
+Area      Total     Active    
+------------------------------
+Normal     1         1
+Stub       0         0
+NSSA       0         0
+
+Area  : 0.0.0.0
+----------------
+Area Type              : Normal         Status               : Active         
+Total Interfaces       : 4              Active Interfaces    : 4              
+Passive Interfaces     : 0              Loopback Interfaces  : 1
+SPF Calculation Count  : 18             
+Area ranges     : 
+Number of LSAs         : 4              Checksum Sum         : 111950
+
+
+========================================
+
+--- Command: sh ip ospf nei ---
+
+VRF : default                          Process : 1
+===================================================
+
+Total Number of Neighbors : 2
+
+Neighbor ID      Priority  State             Nbr Address       Interface
+-------------------------------------------------------------------------
+10.255.0.3       n/a       FULL              10.255.0.3         1/1/1          
+
+10.255.0.4       n/a       FULL              10.255.0.4         1/1/2          
+
+
+========================================

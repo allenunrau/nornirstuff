@@ -1,0 +1,4 @@
+sh ip int br | i up
+sh ip route
+sh ip ospf
+sh ip ospf nei

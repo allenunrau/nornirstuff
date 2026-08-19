@@ -1,17 +1,16 @@
-=== Command: show ip int br | i up ===
+=== Command: sh ver ===
+-----------------------------------------------------------------------------
+AOS-CX
+(c) Copyright Hewlett Packard Enterprise Development LP
+-----------------------------------------------------------------------------
+Version      : Virtual.10.17.1001                                            
+Build Date   :                                                               
+Build ID     : AOS-CX:Virtual.10.17.1001:66ea7ed349ea:202602181411           
+Build SHA    : 66ea7ed349ea0745bc3219f5f8e0c77bdb4fd3dd                      
+Hot Patches  :                                                               
+Active Image :                               
 
-
-========================================
-
-=== Command: show ip route ===
-
-No ipv4 routes configured 
-
-
-
-========================================
-
-=== Command: show ip ospf neighbor ===
-OSPF Process is not running on VRF default.
+Service OS Version :                               
+BIOS Version       :                               
 
 ========================================

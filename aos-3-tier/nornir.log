@@ -1758,3 +1758,15 @@ Device settings: aruba_aoscx 10.1.1.64:22
 2026-08-19 16:53:10,039 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
 2026-08-19 16:53:22,850 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {} on 6 hosts
 2026-08-19 16:53:25,461 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
+2026-08-19 17:18:55,121 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {'commands': ['sh ver']} on 6 hosts
+2026-08-19 17:18:57,576 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
+2026-08-19 17:22:06,665 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {'commands': ['sh ip int br | i up', 'sh ip route', 'sh ip ospf', 'sh ip ospf nei']} on 6 hosts
+2026-08-19 17:22:09,752 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
+2026-08-19 17:30:50,697 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {'commands': ['sh ver'], 'filename_suffix': None} on 6 hosts
+2026-08-19 17:30:52,903 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
+2026-08-19 17:31:20,723 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {'commands': ['sh ip int br | i up', 'sh ip route', 'sh ip ospf', 'sh ip ospf nei'], 'filename_suffix': 'ospf'} on 6 hosts
+2026-08-19 17:31:23,462 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
+2026-08-19 17:32:51,951 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {'commands': ['sh ip int br | i up', 'sh ip route', 'sh ip ospf', 'sh ip ospf nei'], 'filename_suffix': 'ospf'} on 6 hosts
+2026-08-19 17:32:54,872 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
+2026-08-19 17:33:50,402 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {'commands': ['sh ip int br | i up', 'sh ip route', 'sh ip ospf', 'sh ip ospf nei'], 'filename_suffix': 'ospf'} on 6 hosts
+2026-08-19 17:33:53,272 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
