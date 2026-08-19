@@ -1713,3 +1713,20 @@ Device settings: aruba_aoscx 10.1.1.64:22
 
 
 2026-08-18 20:47:11,293 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include "^Version"'} on 6 hosts
+2026-08-19 13:58:38,225 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include "^Version"'} on 6 hosts
+2026-08-19 14:02:21,955 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include "^Version"'} on 6 hosts
+2026-08-19 14:02:24,486 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
+2026-08-19 14:06:12,619 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include "^Version"'} on 6 hosts
+2026-08-19 14:06:14,731 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
+2026-08-19 14:09:32,854 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version'} on 6 hosts
+2026-08-19 14:09:35,148 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
+2026-08-19 14:09:51,908 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version'} on 6 hosts
+2026-08-19 14:09:53,950 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
+2026-08-19 14:15:17,439 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'sh ip int br | i up'} on 6 hosts
+2026-08-19 14:15:19,847 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
+2026-08-19 14:16:02,669 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show ip interface brief'} on 6 hosts
+2026-08-19 14:16:05,063 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
+2026-08-19 14:17:07,995 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show ip interface brief'} on 6 hosts
+2026-08-19 14:17:10,277 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
+2026-08-19 14:17:47,365 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {} on 6 hosts
+2026-08-19 14:17:49,726 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
