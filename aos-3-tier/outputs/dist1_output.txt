@@ -1,0 +1,49 @@
+=== Command: show ip int br | i up ===
+1/1/1            10.255.0.3/32             up/up
+1/1/2            10.255.0.3/32             up/up
+loopback0        10.255.0.3/32             up/up
+
+========================================
+
+=== Command: show ip route ===
+
+Displaying ipv4 routes selected for forwarding
+
+Origin Codes: C - connected, S - static, L - local
+              R - RIP, B - BGP, O - OSPF, D - DHCP
+              U - Unnumbered
+Type Codes:   E - External BGP, I - Internal BGP, V - VPN, EV - EVPN
+              IA - OSPF internal area, E1 - OSPF external type 1
+              E2 - OSPF external type 2   
+
+VRF: default
+
+Prefix              Nexthop                                  Interface     VRF(egress)       Origin/   Distance/    Age
+                                                                                             Type      Metric
+--------------------------------------------------------------------------------------------------------
+10.255.0.1/32       10.255.0.1                               1/1/1         -                 O         [110/100]    01h:07m:55s  
+10.255.0.3/32       -                                        loopback0     -                 L         [0/0]        -            
+10.255.0.4/32       10.255.0.1                               1/1/1         -                 O         [110/200]    00h:39m:31s  
+                    10.255.0.2                               1/1/2         -                           [110/200]    00h:39m:31s  
+192.0.2.0/30        10.255.0.1                               1/1/1         -                 O         [110/200]    00h:28m:08s  
+192.0.2.4/30        10.255.0.2                               1/1/2         -                 O         [110/200]    00h:25m:25s  
+
+Total Route Count : 5
+
+
+========================================
+
+=== Command: show ip ospf neighbor ===
+VRF : default                          Process : 1
+===================================================
+
+Total Number of Neighbors : 2
+
+Neighbor ID      Priority  State             Nbr Address       Interface
+-------------------------------------------------------------------------
+10.255.0.1       n/a       FULL              10.255.0.1         1/1/1          
+
+10.255.0.2       n/a       FULL              10.255.0.2         1/1/2          
+
+
+========================================

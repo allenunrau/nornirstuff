@@ -14,7 +14,7 @@ from paramiko.ssh_exception import (
 )
 
 
-COMMAND = "show ip interface brief"
+COMMAND = "show ip interface brief | i up"
 
 AUTHENTICATION_ERRORS = (NetmikoAuthenticationException, AuthenticationException)
 TIMEOUT_ERRORS = (NetmikoTimeoutException, SocketTimeout, TimeoutError)

@@ -1,0 +1,17 @@
+=== Command: show ip int br | i up ===
+
+
+========================================
+
+=== Command: show ip route ===
+
+No ipv4 routes configured 
+
+
+
+========================================
+
+=== Command: show ip ospf neighbor ===
+OSPF Process is not running on VRF default.
+
+========================================
