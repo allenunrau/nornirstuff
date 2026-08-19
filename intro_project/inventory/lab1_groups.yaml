@@ -1,0 +1,12 @@
+# inventory/groups.yaml
+cisco_ios:
+  platform: ios
+  connection_options:
+    netmiko:
+      extras:
+        device_type: cisco_ios
+        timeout: 30
+    napalm:
+      extras:
+        optional_args:
+          transport: ssh

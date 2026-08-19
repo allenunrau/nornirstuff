@@ -1,0 +1,43 @@
+2026-06-12 20:27:24,996 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_config' with args {'config_commands': ['vlan 100', 'name Engineering', 'vlan 200', 'name Sales', 'vlan 300', 'name Management', 'exit']} on 1 hosts
+2026-06-12 20:27:37,990 - nornir.core.task -    ERROR -      start() - Host 'switch1': task 'netmiko_send_config' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/venv_nornir/lib/python3.12/site-packages/nornir/core/task.py", line 98, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/venv_nornir/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_config.py", line 36, in netmiko_send_config
+    net_connect.enable()
+  File "/home/alu/nornir/venv_nornir/lib/python3.12/site-packages/netmiko/cisco_base_connection.py", line 27, in enable
+    return super().enable(
+           ^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/venv_nornir/lib/python3.12/site-packages/netmiko/base_connection.py", line 2061, in enable
+    output += self.enable_secret_handler(pattern=pattern, output=output, re_flags=re_flags)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/venv_nornir/lib/python3.12/site-packages/netmiko/base_connection.py", line 2013, in enable_secret_handler
+    new_output = self.read_until_prompt()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/venv_nornir/lib/python3.12/site-packages/netmiko/base_connection.py", line 841, in read_until_prompt
+    return self.read_until_pattern(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/venv_nornir/lib/python3.12/site-packages/netmiko/base_connection.py", line 750, in read_until_pattern
+    raise ReadTimeout(msg)
+netmiko.exceptions.ReadTimeout: 
+
+Pattern not detected: 'sw1' in output.
+
+Things you might try to fix this:
+1. Adjust the regex pattern to better identify the terminating string. Note, in
+many situations the pattern is automatically based on the network device's prompt.
+2. Increase the read_timeout to a larger value.
+
+You can also look at the Netmiko session_log or debug log for more information.
+
+
+
+2026-06-19 20:22:04,160 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include uptime'} on 2 hosts
+2026-06-19 20:22:28,132 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include Version|uptime'} on 2 hosts
+2026-06-19 20:23:48,817 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include Version|uptime'} on 2 hosts
+2026-06-19 20:23:49,919 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show interfaces | include line protocol|is up'} on 2 hosts
+2026-06-19 20:32:25,346 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include Version|uptime'} on 2 hosts
+2026-06-19 20:33:08,100 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'sh ip int brief | i up | i up'} on 2 hosts
+2026-06-19 20:34:44,875 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'sh ip int brief | i up'} on 2 hosts
+2026-06-19 20:36:58,024 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'sh ip int brief | ex unassigned'} on 2 hosts

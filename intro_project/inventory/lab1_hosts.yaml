@@ -1,0 +1,16 @@
+# inventory/hosts.yaml
+rt:
+  hostname: 10.1.1.52
+  groups:
+    - cisco_ios
+  data:
+    role: core_router
+    location: virtual, lab1
+
+sw1:
+  hostname: 10.1.1.51
+  groups:
+    - cisco_ios
+  data:
+    role: access_switch
+    location: virtual, lab1

@@ -1,0 +1,15 @@
+# inventory/groups.yaml
+switches:
+  platform: aruba_aoscx
+  connection_options:
+    netmiko:
+      extras:
+        device_type: aruba_aoscx
+        timeout: 15
+    napalm:
+      extras:
+        optional_args:
+          transport: ssh
+core: {}
+distribution: {}
+access: {}

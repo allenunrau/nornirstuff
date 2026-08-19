@@ -1,0 +1,1715 @@
+2026-06-12 20:27:24,996 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_config' with args {'config_commands': ['vlan 100', 'name Engineering', 'vlan 200', 'name Sales', 'vlan 300', 'name Management', 'exit']} on 1 hosts
+2026-06-12 20:27:37,990 - nornir.core.task -    ERROR -      start() - Host 'switch1': task 'netmiko_send_config' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/venv_nornir/lib/python3.12/site-packages/nornir/core/task.py", line 98, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/venv_nornir/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_config.py", line 36, in netmiko_send_config
+    net_connect.enable()
+  File "/home/alu/nornir/venv_nornir/lib/python3.12/site-packages/netmiko/cisco_base_connection.py", line 27, in enable
+    return super().enable(
+           ^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/venv_nornir/lib/python3.12/site-packages/netmiko/base_connection.py", line 2061, in enable
+    output += self.enable_secret_handler(pattern=pattern, output=output, re_flags=re_flags)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/venv_nornir/lib/python3.12/site-packages/netmiko/base_connection.py", line 2013, in enable_secret_handler
+    new_output = self.read_until_prompt()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/venv_nornir/lib/python3.12/site-packages/netmiko/base_connection.py", line 841, in read_until_prompt
+    return self.read_until_pattern(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/venv_nornir/lib/python3.12/site-packages/netmiko/base_connection.py", line 750, in read_until_pattern
+    raise ReadTimeout(msg)
+netmiko.exceptions.ReadTimeout: 
+
+Pattern not detected: 'sw1' in output.
+
+Things you might try to fix this:
+1. Adjust the regex pattern to better identify the terminating string. Note, in
+many situations the pattern is automatically based on the network device's prompt.
+2. Increase the read_timeout to a larger value.
+
+You can also look at the Netmiko session_log or debug log for more information.
+
+
+
+2026-06-19 20:22:04,160 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include uptime'} on 2 hosts
+2026-06-19 20:22:28,132 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include Version|uptime'} on 2 hosts
+2026-06-19 20:23:48,817 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include Version|uptime'} on 2 hosts
+2026-06-19 20:23:49,919 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show interfaces | include line protocol|is up'} on 2 hosts
+2026-06-19 20:32:25,346 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include Version|uptime'} on 2 hosts
+2026-06-19 20:33:08,100 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'sh ip int brief | i up | i up'} on 2 hosts
+2026-06-19 20:34:44,875 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'sh ip int brief | i up'} on 2 hosts
+2026-06-19 20:36:58,024 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'sh ip int brief | ex unassigned'} on 2 hosts
+2026-08-18 16:55:49,508 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include Version|uptime'} on 6 hosts
+2026-08-18 16:55:49,511 - nornir.core.task -    ERROR -      start() - Host 'core1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 455, in ConnectHandler
+    raise ValueError(
+ValueError: Unsupported 'device_type' currently supported platforms are: 
+a10
+accedian
+adtran_os
+adva_fsp150f2
+adva_fsp150f3
+alaxala_ax26s
+alaxala_ax36s
+alcatel_aos
+alcatel_sros
+allied_telesis_awplus
+apresia_aeos
+arista_eos
+arris_cer
+aruba_aoscx
+aruba_os
+aruba_osswitch
+aruba_procurve
+asterfusion_asternos
+audiocode_66
+audiocode_72
+audiocode_shell
+avaya_ers
+avaya_vsp
+bintec_boss
+broadcom_icos
+brocade_fastiron
+brocade_fos
+brocade_netiron
+brocade_nos
+brocade_vdx
+brocade_vyos
+calix_b6
+casa_cmts
+cdot_cros
+centec_os
+checkpoint_gaia
+ciena_saos
+ciena_saos10
+ciena_waveserver
+cisco_apic
+cisco_asa
+cisco_ftd
+cisco_ios
+cisco_nxos
+cisco_s200
+cisco_s300
+cisco_tp
+cisco_viptela
+cisco_wlc
+cisco_xe
+cisco_xr
+cloudgenix_ion
+corelight_linux
+coriant
+cumulus_linux
+dell_dnos9
+dell_force10
+dell_isilon
+dell_os10
+dell_os6
+dell_os9
+dell_powerconnect
+dell_sonic
+digi_transport
+dlink_ds
+edgecore_sonic
+ekinops_ek360
+eltex
+eltex_esr
+endace
+enterasys
+ericsson_ipos
+ericsson_mltn63
+ericsson_mltn66
+extreme
+extreme_ers
+extreme_exos
+extreme_netiron
+extreme_nos
+extreme_slx
+extreme_tierra
+extreme_vdx
+extreme_vsp
+extreme_wing
+f5_linux
+f5_ltm
+f5_tmsh
+fiberstore_fsos
+fiberstore_fsosv2
+fiberstore_networkos
+flexvnf
+fortinet
+garderos_grs
+generic
+generic_termserver
+h3c_comware
+hillstone_stoneos
+hp_comware
+hp_procurve
+huawei
+huawei_olt
+huawei_smartax
+huawei_smartaxmmi
+huawei_vrp
+huawei_vrpv8
+infinera_packet
+ipinfusion_ocnos
+juniper
+juniper_junos
+juniper_screenos
+keymile
+keymile_nos
+lancom_lcossx4
+linux
+maipu
+mellanox
+mellanox_mlnxos
+mikrotik_routeros
+mikrotik_switchos
+mrv_lx
+mrv_optiswitch
+nec_ix
+netapp_cdot
+netgear_prosafe
+netscaler
+nokia_srl
+nokia_sros
+oneaccess_oneos
+ovs_linux
+paloalto_panos
+pluribus
+quanta_mesh
+rad_etx
+raisecom_roap
+ruckus_fastiron
+ruijie_os
+silverpeak_vxoa
+sixwind_os
+sophos_sfos
+supermicro_smis
+telcosystems_binos
+teldat_cit
+tplink_jetstream
+ubiquiti_edge
+ubiquiti_edgerouter
+ubiquiti_edgeswitch
+ubiquiti_unifiswitch
+vertiv_mph
+vyatta_vyos
+vyos
+watchguard_fireware
+yamaha
+zte_zxros
+zyxel_os
+
+2026-08-18 16:55:49,511 - nornir.core.task -    ERROR -      start() - Host 'dist1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 455, in ConnectHandler
+    raise ValueError(
+ValueError: Unsupported 'device_type' currently supported platforms are: 
+a10
+accedian
+adtran_os
+adva_fsp150f2
+adva_fsp150f3
+alaxala_ax26s
+alaxala_ax36s
+alcatel_aos
+alcatel_sros
+allied_telesis_awplus
+apresia_aeos
+arista_eos
+arris_cer
+aruba_aoscx
+aruba_os
+aruba_osswitch
+aruba_procurve
+asterfusion_asternos
+audiocode_66
+audiocode_72
+audiocode_shell
+avaya_ers
+avaya_vsp
+bintec_boss
+broadcom_icos
+brocade_fastiron
+brocade_fos
+brocade_netiron
+brocade_nos
+brocade_vdx
+brocade_vyos
+calix_b6
+casa_cmts
+cdot_cros
+centec_os
+checkpoint_gaia
+ciena_saos
+ciena_saos10
+ciena_waveserver
+cisco_apic
+cisco_asa
+cisco_ftd
+cisco_ios
+cisco_nxos
+cisco_s200
+cisco_s300
+cisco_tp
+cisco_viptela
+cisco_wlc
+cisco_xe
+cisco_xr
+cloudgenix_ion
+corelight_linux
+coriant
+cumulus_linux
+dell_dnos9
+dell_force10
+dell_isilon
+dell_os10
+dell_os6
+dell_os9
+dell_powerconnect
+dell_sonic
+digi_transport
+dlink_ds
+edgecore_sonic
+ekinops_ek360
+eltex
+eltex_esr
+endace
+enterasys
+ericsson_ipos
+ericsson_mltn63
+ericsson_mltn66
+extreme
+extreme_ers
+extreme_exos
+extreme_netiron
+extreme_nos
+extreme_slx
+extreme_tierra
+extreme_vdx
+extreme_vsp
+extreme_wing
+f5_linux
+f5_ltm
+f5_tmsh
+fiberstore_fsos
+fiberstore_fsosv2
+fiberstore_networkos
+flexvnf
+fortinet
+garderos_grs
+generic
+generic_termserver
+h3c_comware
+hillstone_stoneos
+hp_comware
+hp_procurve
+huawei
+huawei_olt
+huawei_smartax
+huawei_smartaxmmi
+huawei_vrp
+huawei_vrpv8
+infinera_packet
+ipinfusion_ocnos
+juniper
+juniper_junos
+juniper_screenos
+keymile
+keymile_nos
+lancom_lcossx4
+linux
+maipu
+mellanox
+mellanox_mlnxos
+mikrotik_routeros
+mikrotik_switchos
+mrv_lx
+mrv_optiswitch
+nec_ix
+netapp_cdot
+netgear_prosafe
+netscaler
+nokia_srl
+nokia_sros
+oneaccess_oneos
+ovs_linux
+paloalto_panos
+pluribus
+quanta_mesh
+rad_etx
+raisecom_roap
+ruckus_fastiron
+ruijie_os
+silverpeak_vxoa
+sixwind_os
+sophos_sfos
+supermicro_smis
+telcosystems_binos
+teldat_cit
+tplink_jetstream
+ubiquiti_edge
+ubiquiti_edgerouter
+ubiquiti_edgeswitch
+ubiquiti_unifiswitch
+vertiv_mph
+vyatta_vyos
+vyos
+watchguard_fireware
+yamaha
+zte_zxros
+zyxel_os
+
+2026-08-18 16:55:49,512 - nornir.core.task -    ERROR -      start() - Host 'core2': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 455, in ConnectHandler
+    raise ValueError(
+ValueError: Unsupported 'device_type' currently supported platforms are: 
+a10
+accedian
+adtran_os
+adva_fsp150f2
+adva_fsp150f3
+alaxala_ax26s
+alaxala_ax36s
+alcatel_aos
+alcatel_sros
+allied_telesis_awplus
+apresia_aeos
+arista_eos
+arris_cer
+aruba_aoscx
+aruba_os
+aruba_osswitch
+aruba_procurve
+asterfusion_asternos
+audiocode_66
+audiocode_72
+audiocode_shell
+avaya_ers
+avaya_vsp
+bintec_boss
+broadcom_icos
+brocade_fastiron
+brocade_fos
+brocade_netiron
+brocade_nos
+brocade_vdx
+brocade_vyos
+calix_b6
+casa_cmts
+cdot_cros
+centec_os
+checkpoint_gaia
+ciena_saos
+ciena_saos10
+ciena_waveserver
+cisco_apic
+cisco_asa
+cisco_ftd
+cisco_ios
+cisco_nxos
+cisco_s200
+cisco_s300
+cisco_tp
+cisco_viptela
+cisco_wlc
+cisco_xe
+cisco_xr
+cloudgenix_ion
+corelight_linux
+coriant
+cumulus_linux
+dell_dnos9
+dell_force10
+dell_isilon
+dell_os10
+dell_os6
+dell_os9
+dell_powerconnect
+dell_sonic
+digi_transport
+dlink_ds
+edgecore_sonic
+ekinops_ek360
+eltex
+eltex_esr
+endace
+enterasys
+ericsson_ipos
+ericsson_mltn63
+ericsson_mltn66
+extreme
+extreme_ers
+extreme_exos
+extreme_netiron
+extreme_nos
+extreme_slx
+extreme_tierra
+extreme_vdx
+extreme_vsp
+extreme_wing
+f5_linux
+f5_ltm
+f5_tmsh
+fiberstore_fsos
+fiberstore_fsosv2
+fiberstore_networkos
+flexvnf
+fortinet
+garderos_grs
+generic
+generic_termserver
+h3c_comware
+hillstone_stoneos
+hp_comware
+hp_procurve
+huawei
+huawei_olt
+huawei_smartax
+huawei_smartaxmmi
+huawei_vrp
+huawei_vrpv8
+infinera_packet
+ipinfusion_ocnos
+juniper
+juniper_junos
+juniper_screenos
+keymile
+keymile_nos
+lancom_lcossx4
+linux
+maipu
+mellanox
+mellanox_mlnxos
+mikrotik_routeros
+mikrotik_switchos
+mrv_lx
+mrv_optiswitch
+nec_ix
+netapp_cdot
+netgear_prosafe
+netscaler
+nokia_srl
+nokia_sros
+oneaccess_oneos
+ovs_linux
+paloalto_panos
+pluribus
+quanta_mesh
+rad_etx
+raisecom_roap
+ruckus_fastiron
+ruijie_os
+silverpeak_vxoa
+sixwind_os
+sophos_sfos
+supermicro_smis
+telcosystems_binos
+teldat_cit
+tplink_jetstream
+ubiquiti_edge
+ubiquiti_edgerouter
+ubiquiti_edgeswitch
+ubiquiti_unifiswitch
+vertiv_mph
+vyatta_vyos
+vyos
+watchguard_fireware
+yamaha
+zte_zxros
+zyxel_os
+
+2026-08-18 16:55:49,513 - nornir.core.task -    ERROR -      start() - Host 'access2': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 455, in ConnectHandler
+    raise ValueError(
+ValueError: Unsupported 'device_type' currently supported platforms are: 
+a10
+accedian
+adtran_os
+adva_fsp150f2
+adva_fsp150f3
+alaxala_ax26s
+alaxala_ax36s
+alcatel_aos
+alcatel_sros
+allied_telesis_awplus
+apresia_aeos
+arista_eos
+arris_cer
+aruba_aoscx
+aruba_os
+aruba_osswitch
+aruba_procurve
+asterfusion_asternos
+audiocode_66
+audiocode_72
+audiocode_shell
+avaya_ers
+avaya_vsp
+bintec_boss
+broadcom_icos
+brocade_fastiron
+brocade_fos
+brocade_netiron
+brocade_nos
+brocade_vdx
+brocade_vyos
+calix_b6
+casa_cmts
+cdot_cros
+centec_os
+checkpoint_gaia
+ciena_saos
+ciena_saos10
+ciena_waveserver
+cisco_apic
+cisco_asa
+cisco_ftd
+cisco_ios
+cisco_nxos
+cisco_s200
+cisco_s300
+cisco_tp
+cisco_viptela
+cisco_wlc
+cisco_xe
+cisco_xr
+cloudgenix_ion
+corelight_linux
+coriant
+cumulus_linux
+dell_dnos9
+dell_force10
+dell_isilon
+dell_os10
+dell_os6
+dell_os9
+dell_powerconnect
+dell_sonic
+digi_transport
+dlink_ds
+edgecore_sonic
+ekinops_ek360
+eltex
+eltex_esr
+endace
+enterasys
+ericsson_ipos
+ericsson_mltn63
+ericsson_mltn66
+extreme
+extreme_ers
+extreme_exos
+extreme_netiron
+extreme_nos
+extreme_slx
+extreme_tierra
+extreme_vdx
+extreme_vsp
+extreme_wing
+f5_linux
+f5_ltm
+f5_tmsh
+fiberstore_fsos
+fiberstore_fsosv2
+fiberstore_networkos
+flexvnf
+fortinet
+garderos_grs
+generic
+generic_termserver
+h3c_comware
+hillstone_stoneos
+hp_comware
+hp_procurve
+huawei
+huawei_olt
+huawei_smartax
+huawei_smartaxmmi
+huawei_vrp
+huawei_vrpv8
+infinera_packet
+ipinfusion_ocnos
+juniper
+juniper_junos
+juniper_screenos
+keymile
+keymile_nos
+lancom_lcossx4
+linux
+maipu
+mellanox
+mellanox_mlnxos
+mikrotik_routeros
+mikrotik_switchos
+mrv_lx
+mrv_optiswitch
+nec_ix
+netapp_cdot
+netgear_prosafe
+netscaler
+nokia_srl
+nokia_sros
+oneaccess_oneos
+ovs_linux
+paloalto_panos
+pluribus
+quanta_mesh
+rad_etx
+raisecom_roap
+ruckus_fastiron
+ruijie_os
+silverpeak_vxoa
+sixwind_os
+sophos_sfos
+supermicro_smis
+telcosystems_binos
+teldat_cit
+tplink_jetstream
+ubiquiti_edge
+ubiquiti_edgerouter
+ubiquiti_edgeswitch
+ubiquiti_unifiswitch
+vertiv_mph
+vyatta_vyos
+vyos
+watchguard_fireware
+yamaha
+zte_zxros
+zyxel_os
+
+2026-08-18 16:55:49,514 - nornir.core.task -    ERROR -      start() - Host 'access1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 455, in ConnectHandler
+    raise ValueError(
+ValueError: Unsupported 'device_type' currently supported platforms are: 
+a10
+accedian
+adtran_os
+adva_fsp150f2
+adva_fsp150f3
+alaxala_ax26s
+alaxala_ax36s
+alcatel_aos
+alcatel_sros
+allied_telesis_awplus
+apresia_aeos
+arista_eos
+arris_cer
+aruba_aoscx
+aruba_os
+aruba_osswitch
+aruba_procurve
+asterfusion_asternos
+audiocode_66
+audiocode_72
+audiocode_shell
+avaya_ers
+avaya_vsp
+bintec_boss
+broadcom_icos
+brocade_fastiron
+brocade_fos
+brocade_netiron
+brocade_nos
+brocade_vdx
+brocade_vyos
+calix_b6
+casa_cmts
+cdot_cros
+centec_os
+checkpoint_gaia
+ciena_saos
+ciena_saos10
+ciena_waveserver
+cisco_apic
+cisco_asa
+cisco_ftd
+cisco_ios
+cisco_nxos
+cisco_s200
+cisco_s300
+cisco_tp
+cisco_viptela
+cisco_wlc
+cisco_xe
+cisco_xr
+cloudgenix_ion
+corelight_linux
+coriant
+cumulus_linux
+dell_dnos9
+dell_force10
+dell_isilon
+dell_os10
+dell_os6
+dell_os9
+dell_powerconnect
+dell_sonic
+digi_transport
+dlink_ds
+edgecore_sonic
+ekinops_ek360
+eltex
+eltex_esr
+endace
+enterasys
+ericsson_ipos
+ericsson_mltn63
+ericsson_mltn66
+extreme
+extreme_ers
+extreme_exos
+extreme_netiron
+extreme_nos
+extreme_slx
+extreme_tierra
+extreme_vdx
+extreme_vsp
+extreme_wing
+f5_linux
+f5_ltm
+f5_tmsh
+fiberstore_fsos
+fiberstore_fsosv2
+fiberstore_networkos
+flexvnf
+fortinet
+garderos_grs
+generic
+generic_termserver
+h3c_comware
+hillstone_stoneos
+hp_comware
+hp_procurve
+huawei
+huawei_olt
+huawei_smartax
+huawei_smartaxmmi
+huawei_vrp
+huawei_vrpv8
+infinera_packet
+ipinfusion_ocnos
+juniper
+juniper_junos
+juniper_screenos
+keymile
+keymile_nos
+lancom_lcossx4
+linux
+maipu
+mellanox
+mellanox_mlnxos
+mikrotik_routeros
+mikrotik_switchos
+mrv_lx
+mrv_optiswitch
+nec_ix
+netapp_cdot
+netgear_prosafe
+netscaler
+nokia_srl
+nokia_sros
+oneaccess_oneos
+ovs_linux
+paloalto_panos
+pluribus
+quanta_mesh
+rad_etx
+raisecom_roap
+ruckus_fastiron
+ruijie_os
+silverpeak_vxoa
+sixwind_os
+sophos_sfos
+supermicro_smis
+telcosystems_binos
+teldat_cit
+tplink_jetstream
+ubiquiti_edge
+ubiquiti_edgerouter
+ubiquiti_edgeswitch
+ubiquiti_unifiswitch
+vertiv_mph
+vyatta_vyos
+vyos
+watchguard_fireware
+yamaha
+zte_zxros
+zyxel_os
+
+2026-08-18 16:55:49,514 - nornir.core.task -    ERROR -      start() - Host 'dist2': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 455, in ConnectHandler
+    raise ValueError(
+ValueError: Unsupported 'device_type' currently supported platforms are: 
+a10
+accedian
+adtran_os
+adva_fsp150f2
+adva_fsp150f3
+alaxala_ax26s
+alaxala_ax36s
+alcatel_aos
+alcatel_sros
+allied_telesis_awplus
+apresia_aeos
+arista_eos
+arris_cer
+aruba_aoscx
+aruba_os
+aruba_osswitch
+aruba_procurve
+asterfusion_asternos
+audiocode_66
+audiocode_72
+audiocode_shell
+avaya_ers
+avaya_vsp
+bintec_boss
+broadcom_icos
+brocade_fastiron
+brocade_fos
+brocade_netiron
+brocade_nos
+brocade_vdx
+brocade_vyos
+calix_b6
+casa_cmts
+cdot_cros
+centec_os
+checkpoint_gaia
+ciena_saos
+ciena_saos10
+ciena_waveserver
+cisco_apic
+cisco_asa
+cisco_ftd
+cisco_ios
+cisco_nxos
+cisco_s200
+cisco_s300
+cisco_tp
+cisco_viptela
+cisco_wlc
+cisco_xe
+cisco_xr
+cloudgenix_ion
+corelight_linux
+coriant
+cumulus_linux
+dell_dnos9
+dell_force10
+dell_isilon
+dell_os10
+dell_os6
+dell_os9
+dell_powerconnect
+dell_sonic
+digi_transport
+dlink_ds
+edgecore_sonic
+ekinops_ek360
+eltex
+eltex_esr
+endace
+enterasys
+ericsson_ipos
+ericsson_mltn63
+ericsson_mltn66
+extreme
+extreme_ers
+extreme_exos
+extreme_netiron
+extreme_nos
+extreme_slx
+extreme_tierra
+extreme_vdx
+extreme_vsp
+extreme_wing
+f5_linux
+f5_ltm
+f5_tmsh
+fiberstore_fsos
+fiberstore_fsosv2
+fiberstore_networkos
+flexvnf
+fortinet
+garderos_grs
+generic
+generic_termserver
+h3c_comware
+hillstone_stoneos
+hp_comware
+hp_procurve
+huawei
+huawei_olt
+huawei_smartax
+huawei_smartaxmmi
+huawei_vrp
+huawei_vrpv8
+infinera_packet
+ipinfusion_ocnos
+juniper
+juniper_junos
+juniper_screenos
+keymile
+keymile_nos
+lancom_lcossx4
+linux
+maipu
+mellanox
+mellanox_mlnxos
+mikrotik_routeros
+mikrotik_switchos
+mrv_lx
+mrv_optiswitch
+nec_ix
+netapp_cdot
+netgear_prosafe
+netscaler
+nokia_srl
+nokia_sros
+oneaccess_oneos
+ovs_linux
+paloalto_panos
+pluribus
+quanta_mesh
+rad_etx
+raisecom_roap
+ruckus_fastiron
+ruijie_os
+silverpeak_vxoa
+sixwind_os
+sophos_sfos
+supermicro_smis
+telcosystems_binos
+teldat_cit
+tplink_jetstream
+ubiquiti_edge
+ubiquiti_edgerouter
+ubiquiti_edgeswitch
+ubiquiti_unifiswitch
+vertiv_mph
+vyatta_vyos
+vyos
+watchguard_fireware
+yamaha
+zte_zxros
+zyxel_os
+
+2026-08-18 16:56:20,067 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include Version|uptime'} on 6 hosts
+2026-08-18 16:56:22,062 - nornir.core.task -    ERROR -      start() - Host 'dist1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1146, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 477, in connect
+    self._auth(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 779, in _auth
+    raise saved_exception
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 766, in _auth
+    self._transport.auth_password(username, password)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/transport.py", line 1529, in auth_password
+    return self.auth_handler.wait_for_response(my_event)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/auth_handler.py", line 227, in wait_for_response
+    raise e
+paramiko.ssh_exception.AuthenticationException: Authentication failed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 460, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/aruba/aruba_aoscx.py", line 18, in __init__
+    return super().__init__(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 495, in __init__
+    self._open()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 500, in _open
+    self.establish_connection()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1183, in establish_connection
+    raise NetmikoAuthenticationException(msg)
+netmiko.exceptions.NetmikoAuthenticationException: Authentication to device failed.
+
+Common causes of this problem are:
+1. Invalid username and password
+2. Incorrect SSH-key file
+3. Connecting to the wrong device
+
+Device settings: aruba_aoscx 10.1.1.63:22
+
+Authentication failed.
+
+2026-08-18 16:56:22,292 - nornir.core.task -    ERROR -      start() - Host 'dist2': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1146, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 477, in connect
+    self._auth(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 779, in _auth
+    raise saved_exception
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 766, in _auth
+    self._transport.auth_password(username, password)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/transport.py", line 1529, in auth_password
+    return self.auth_handler.wait_for_response(my_event)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/auth_handler.py", line 227, in wait_for_response
+    raise e
+paramiko.ssh_exception.AuthenticationException: Authentication failed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 460, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/aruba/aruba_aoscx.py", line 18, in __init__
+    return super().__init__(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 495, in __init__
+    self._open()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 500, in _open
+    self.establish_connection()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1183, in establish_connection
+    raise NetmikoAuthenticationException(msg)
+netmiko.exceptions.NetmikoAuthenticationException: Authentication to device failed.
+
+Common causes of this problem are:
+1. Invalid username and password
+2. Incorrect SSH-key file
+3. Connecting to the wrong device
+
+Device settings: aruba_aoscx 10.1.1.64:22
+
+Authentication failed.
+
+2026-08-18 16:56:22,371 - nornir.core.task -    ERROR -      start() - Host 'access2': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1146, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 477, in connect
+    self._auth(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 779, in _auth
+    raise saved_exception
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 766, in _auth
+    self._transport.auth_password(username, password)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/transport.py", line 1529, in auth_password
+    return self.auth_handler.wait_for_response(my_event)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/auth_handler.py", line 227, in wait_for_response
+    raise e
+paramiko.ssh_exception.AuthenticationException: Authentication failed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 460, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/aruba/aruba_aoscx.py", line 18, in __init__
+    return super().__init__(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 495, in __init__
+    self._open()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 500, in _open
+    self.establish_connection()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1183, in establish_connection
+    raise NetmikoAuthenticationException(msg)
+netmiko.exceptions.NetmikoAuthenticationException: Authentication to device failed.
+
+Common causes of this problem are:
+1. Invalid username and password
+2. Incorrect SSH-key file
+3. Connecting to the wrong device
+
+Device settings: aruba_aoscx 10.1.1.66:22
+
+Authentication failed.
+
+2026-08-18 16:56:22,407 - nornir.core.task -    ERROR -      start() - Host 'core2': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1146, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 477, in connect
+    self._auth(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 779, in _auth
+    raise saved_exception
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 766, in _auth
+    self._transport.auth_password(username, password)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/transport.py", line 1529, in auth_password
+    return self.auth_handler.wait_for_response(my_event)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/auth_handler.py", line 227, in wait_for_response
+    raise e
+paramiko.ssh_exception.AuthenticationException: Authentication failed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 460, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/aruba/aruba_aoscx.py", line 18, in __init__
+    return super().__init__(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 495, in __init__
+    self._open()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 500, in _open
+    self.establish_connection()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1183, in establish_connection
+    raise NetmikoAuthenticationException(msg)
+netmiko.exceptions.NetmikoAuthenticationException: Authentication to device failed.
+
+Common causes of this problem are:
+1. Invalid username and password
+2. Incorrect SSH-key file
+3. Connecting to the wrong device
+
+Device settings: aruba_aoscx 10.1.1.62:22
+
+Authentication failed.
+
+2026-08-18 16:56:23,451 - nornir.core.task -    ERROR -      start() - Host 'access1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1146, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 477, in connect
+    self._auth(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 779, in _auth
+    raise saved_exception
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 766, in _auth
+    self._transport.auth_password(username, password)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/transport.py", line 1529, in auth_password
+    return self.auth_handler.wait_for_response(my_event)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/auth_handler.py", line 227, in wait_for_response
+    raise e
+paramiko.ssh_exception.AuthenticationException: Authentication failed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 460, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/aruba/aruba_aoscx.py", line 18, in __init__
+    return super().__init__(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 495, in __init__
+    self._open()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 500, in _open
+    self.establish_connection()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1183, in establish_connection
+    raise NetmikoAuthenticationException(msg)
+netmiko.exceptions.NetmikoAuthenticationException: Authentication to device failed.
+
+Common causes of this problem are:
+1. Invalid username and password
+2. Incorrect SSH-key file
+3. Connecting to the wrong device
+
+Device settings: aruba_aoscx 10.1.1.65:22
+
+Authentication failed.
+
+2026-08-18 16:56:23,599 - nornir.core.task -    ERROR -      start() - Host 'core1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1146, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 477, in connect
+    self._auth(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 779, in _auth
+    raise saved_exception
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 766, in _auth
+    self._transport.auth_password(username, password)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/transport.py", line 1529, in auth_password
+    return self.auth_handler.wait_for_response(my_event)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/auth_handler.py", line 227, in wait_for_response
+    raise e
+paramiko.ssh_exception.AuthenticationException: Authentication failed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 460, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/aruba/aruba_aoscx.py", line 18, in __init__
+    return super().__init__(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 495, in __init__
+    self._open()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 500, in _open
+    self.establish_connection()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1183, in establish_connection
+    raise NetmikoAuthenticationException(msg)
+netmiko.exceptions.NetmikoAuthenticationException: Authentication to device failed.
+
+Common causes of this problem are:
+1. Invalid username and password
+2. Incorrect SSH-key file
+3. Connecting to the wrong device
+
+Device settings: aruba_aoscx 10.1.1.61:22
+
+Authentication failed.
+
+2026-08-18 16:58:04,504 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include Version|uptime'} on 6 hosts
+2026-08-18 17:01:42,252 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include "^Version"'} on 6 hosts
+2026-08-18 17:03:49,721 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'sh ip int br | i up'} on 6 hosts
+2026-08-18 17:14:24,432 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {} on 6 hosts
+2026-08-18 17:15:54,184 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {} on 6 hosts
+2026-08-18 17:27:06,006 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {} on 6 hosts
+2026-08-18 18:15:58,658 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {} on 6 hosts
+2026-08-18 19:15:00,499 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {} on 6 hosts
+2026-08-18 19:57:48,558 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {} on 6 hosts
+2026-08-18 20:01:28,993 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include "^Version"'} on 6 hosts
+2026-08-18 20:01:38,073 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {} on 6 hosts
+2026-08-18 20:38:44,828 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {} on 6 hosts
+2026-08-18 20:46:27,562 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include "^Version"'} on 6 hosts
+2026-08-18 20:46:37,593 - nornir.core.task -    ERROR -      start() - Host 'dist1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1146, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 364, in connect
+    sock.connect(addr)
+TimeoutError: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 460, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/aruba/aruba_aoscx.py", line 18, in __init__
+    return super().__init__(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 495, in __init__
+    self._open()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 500, in _open
+    self.establish_connection()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1168, in establish_connection
+    raise NetmikoTimeoutException(msg)
+netmiko.exceptions.NetmikoTimeoutException: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: aruba_aoscx 10.1.1.63:22
+
+
+
+2026-08-18 20:46:37,595 - nornir.core.task -    ERROR -      start() - Host 'core1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1146, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 364, in connect
+    sock.connect(addr)
+TimeoutError: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 460, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/aruba/aruba_aoscx.py", line 18, in __init__
+    return super().__init__(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 495, in __init__
+    self._open()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 500, in _open
+    self.establish_connection()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1168, in establish_connection
+    raise NetmikoTimeoutException(msg)
+netmiko.exceptions.NetmikoTimeoutException: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: aruba_aoscx 10.1.1.61:22
+
+
+
+2026-08-18 20:46:37,598 - nornir.core.task -    ERROR -      start() - Host 'access2': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1146, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 364, in connect
+    sock.connect(addr)
+TimeoutError: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 460, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/aruba/aruba_aoscx.py", line 18, in __init__
+    return super().__init__(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 495, in __init__
+    self._open()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 500, in _open
+    self.establish_connection()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1168, in establish_connection
+    raise NetmikoTimeoutException(msg)
+netmiko.exceptions.NetmikoTimeoutException: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: aruba_aoscx 10.1.1.66:22
+
+
+
+2026-08-18 20:46:37,600 - nornir.core.task -    ERROR -      start() - Host 'access1': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1146, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 364, in connect
+    sock.connect(addr)
+TimeoutError: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 460, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/aruba/aruba_aoscx.py", line 18, in __init__
+    return super().__init__(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 495, in __init__
+    self._open()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 500, in _open
+    self.establish_connection()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1168, in establish_connection
+    raise NetmikoTimeoutException(msg)
+netmiko.exceptions.NetmikoTimeoutException: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: aruba_aoscx 10.1.1.65:22
+
+
+
+2026-08-18 20:46:37,601 - nornir.core.task -    ERROR -      start() - Host 'core2': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1146, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 364, in connect
+    sock.connect(addr)
+TimeoutError: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 460, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/aruba/aruba_aoscx.py", line 18, in __init__
+    return super().__init__(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 495, in __init__
+    self._open()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 500, in _open
+    self.establish_connection()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1168, in establish_connection
+    raise NetmikoTimeoutException(msg)
+netmiko.exceptions.NetmikoTimeoutException: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: aruba_aoscx 10.1.1.62:22
+
+
+
+2026-08-18 20:46:37,602 - nornir.core.task -    ERROR -      start() - Host 'dist2': task 'netmiko_send_command' failed with traceback:
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1146, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/paramiko/client.py", line 364, in connect
+    sock.connect(addr)
+TimeoutError: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/task.py", line 102, in start
+    r = self.task(self, **self.params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/tasks/netmiko_send_command.py", line 26, in netmiko_send_command
+    net_connect = task.host.get_connection(CONNECTION_NAME, task.nornir.config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 474, in get_connection
+    self.open_connection(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir/core/inventory.py", line 526, in open_connection
+    conn_obj.open(
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/nornir_netmiko/connections/netmiko.py", line 59, in open
+    connection = ConnectHandler(**parameters)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/ssh_dispatcher.py", line 460, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/aruba/aruba_aoscx.py", line 18, in __init__
+    return super().__init__(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 495, in __init__
+    self._open()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 500, in _open
+    self.establish_connection()
+  File "/home/alu/nornir/.venv/lib/python3.12/site-packages/netmiko/base_connection.py", line 1168, in establish_connection
+    raise NetmikoTimeoutException(msg)
+netmiko.exceptions.NetmikoTimeoutException: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: aruba_aoscx 10.1.1.64:22
+
+
+
+2026-08-18 20:47:11,293 -  nornir.core -     INFO -        run() - Running task 'netmiko_send_command' with args {'command_string': 'show version | include "^Version"'} on 6 hosts

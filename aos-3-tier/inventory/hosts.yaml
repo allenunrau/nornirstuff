@@ -1,0 +1,54 @@
+# inventory/hosts.yaml
+core1:
+  hostname: 10.1.1.61
+  groups:
+    - switches
+    - core
+  data:
+    role: core_router
+    location: virtual, lab1
+
+core2:
+  hostname: 10.1.1.62
+  groups:
+    - switches
+    - core
+  data:
+    role: core_router
+    location: virtual, lab1
+
+dist1:
+  hostname: 10.1.1.63
+  groups:
+    - switches
+    - distribution
+  data:
+    role: distribution_switch
+    location: virtual, lab1
+
+dist2:
+  hostname: 10.1.1.64
+  groups:
+    - switches
+    - distribution
+  data:
+    role: distribution_switch
+    location: virtual, lab1
+
+access1:
+  hostname: 10.1.1.65
+  groups:
+    - switches
+    - access
+  data:
+    role: access_switch
+    location: virtual, lab1
+
+access2:
+  hostname: 10.1.1.66
+  groups:
+    - switches
+    - access
+  data:
+    role: access_switch
+    location: virtual, lab1

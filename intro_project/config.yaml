@@ -1,0 +1,12 @@
+# config.yaml
+inventory:
+  plugin: SimpleInventory
+  options:
+    host_file: "inventory/lab1_hosts.yaml"
+    group_file: "inventory/lab1_groups.yaml"
+    defaults_file: "inventory/defaults.yaml"
+
+runner:
+  plugin: threaded
+  options:
+    num_workers: 10

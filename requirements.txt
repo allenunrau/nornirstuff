@@ -1,0 +1,6 @@
+napalm
+nornir
+nornir-napalm
+nornir-netbox
+nornir-utils
+nornir-netmiko
