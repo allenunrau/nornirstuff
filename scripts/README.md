@@ -1,46 +1,46 @@
 # Nornir Scripts
 
-This directory contains helper scripts for working with the `aos-3-tier`
-Nornir lab inventory. Most scripts connect to every inventory host with
-Netmiko, run one or more commands, and either print the results or save them
-under `aos-3-tier/outputs/`.
+This directory contains helper scripts for working with a Nornir project
+directory. Most scripts connect to every inventory host with Netmiko, run one
+or more commands, and either print the results or save them under
+`<nornir-directory>/outputs/`.
 
 Run the scripts from the repository root:
 
 ```bash
-cd nornirstuff
+cd /path/to/nornirstuff
 ```
 
 ## Requirements
 
 - Python environment with `nornir`, `nornir_netmiko`, `netmiko`, `paramiko`, and
   `nornir_utils` installed.
-- A valid Nornir configuration file at `aos-3-tier/config.yaml`.
+- A valid Nornir configuration file at `<nornir-directory>/config.yaml`.
 - Inventory files referenced by `config.yaml`:
-  - `aos-3-tier/inventory/hosts.yaml`
-  - `aos-3-tier/inventory/groups.yaml`
-  - `aos-3-tier/inventory/defaults.yaml`
+  - `<nornir-directory>/inventory/hosts.yaml`
+  - `<nornir-directory>/inventory/groups.yaml`
+  - `<nornir-directory>/inventory/defaults.yaml`
 - SSH reachability from your machine to each device in the inventory.
 - Valid credentials in the inventory defaults, groups, or host entries.
 
-The lab inventory uses the `aruba_aoscx` Netmiko device type for hosts in the
-`switches` group.
+The current lab inventory uses the `aruba_aoscx` Netmiko device type for hosts
+in the `switches` group.
 
-By default, `cmds.py`, `conf.py`, and `ips.py` use `aos-3-tier` as the Nornir
-directory. Pass `--directory` or `-d` to point one of those scripts at another
-directory containing `config.yaml` and the inventory files.
+Use `--directory` or `-d` with `cmds.py`, `conf.py`, and `ips.py` to choose the
+Nornir directory that contains `config.yaml` and the inventory files.
 
 ## Common Troubleshooting
 
-- `Configuration or inventory file not found`: Run the script from
-  `nornirstuff`, and confirm `aos-3-tier/config.yaml` and the inventory files
-  exist.
+- `Configuration or inventory file not found`: Run the script from the
+  repository root, and confirm `<nornir-directory>/config.yaml` and the
+  inventory files exist.
 - `SSH authentication failed`: Check the username and password in the inventory.
 - `Connection or command timed out`: Confirm the device is reachable and SSH is
   enabled.
 - `Unable to communicate with the device`: Check the host IP address, network
   path, SSH service, and device availability.
-- File write errors: Check permissions for the `aos-3-tier/outputs/` directory.
+- File write errors: Check permissions for the
+  `<nornir-directory>/outputs/` directory.
 
 ## `conf.py`
 
@@ -57,10 +57,11 @@ show running-config
 Then it writes one backup file per host:
 
 ```text
-aos-3-tier/outputs/<host>_config.aos
+<nornir-directory>/outputs/<host>_config.aos
 ```
 
-For example, `core1` is saved as `aos-3-tier/outputs/core1_config.aos`.
+For example, `core1` is saved as
+`<nornir-directory>/outputs/core1_config.aos`.
 
 ### Usage
 
@@ -71,7 +72,7 @@ python scripts/conf.py
 Use another Nornir directory:
 
 ```bash
-python scripts/conf.py --directory aos-3-tier
+python scripts/conf.py --directory <nornir-directory>
 ```
 
 ### What Happens When It Runs
@@ -81,14 +82,14 @@ python scripts/conf.py --directory aos-3-tier
 3. The script connects to each host using Netmiko.
 4. It disables paging with `no page`.
 5. It collects the running configuration with `show running-config`.
-6. It creates `aos-3-tier/outputs/` if needed.
+6. It creates `<nornir-directory>/outputs/` if needed.
 7. It writes one `.aos` backup file per host.
 8. It prints an `OK` or `ERROR` line for each host.
 
 Example success message:
 
 ```text
-OK core1: Successfully saved all command outputs to /path/to/nornirstuff/aos-3-tier/outputs/core1_config.aos
+OK core1: Successfully saved all command outputs to /path/to/nornirstuff/<nornir-directory>/outputs/core1_config.aos
 ```
 
 ### Customizing
@@ -111,7 +112,7 @@ output_directory = nornir_directory / "outputs"
 ### Arguments
 
 - `-d`, `--directory`: Optional directory containing Nornir `config.yaml` and
-  inventory files. Defaults to `aos-3-tier`.
+  inventory files.
 
 ### Exit Codes
 
@@ -132,7 +133,7 @@ start with `#` are treated as comments.
 
 Relative command file paths are checked from the current directory first and
 then from the selected Nornir directory, so the existing lab command files can
-still be passed by filename when using the default `aos-3-tier` directory.
+still be passed by filename when they are stored in that directory.
 
 Example command file:
 
@@ -152,7 +153,7 @@ python scripts/cmds.py cmds_ospf
 Use another Nornir directory:
 
 ```bash
-python scripts/cmds.py --directory aos-3-tier cmds_ospf
+python scripts/cmds.py --directory <nornir-directory> cmds_ospf
 ```
 
 Add a filename suffix with `--suffix` or `-s`:
@@ -164,12 +165,12 @@ python scripts/cmds.py cmds_ospf --suffix ospf
 Output files are written to:
 
 ```text
-aos-3-tier/outputs/<host>_output.txt
-aos-3-tier/outputs/<host>_output_<suffix>.txt
+<nornir-directory>/outputs/<host>_output.txt
+<nornir-directory>/outputs/<host>_output_<suffix>.txt
 ```
 
 For example, using `--suffix ospf` writes
-`aos-3-tier/outputs/core1_output_ospf.txt`.
+`<nornir-directory>/outputs/core1_output_ospf.txt`.
 
 ### What Happens When It Runs
 
@@ -177,7 +178,7 @@ For example, using `--suffix ospf` writes
 2. Nornir loads the inventory from `config.yaml`.
 3. The script connects to each host using Netmiko.
 4. It runs each command in order.
-5. It writes one output file per host under `aos-3-tier/outputs/`.
+5. It writes one output file per host under `<nornir-directory>/outputs/`.
 6. If a command fails for a host, it stops running more commands on that host
    and saves the partial output.
 7. It prints an `OK` or `ERROR` line for each host.
@@ -189,7 +190,7 @@ For example, using `--suffix ospf` writes
   be 1 to 64 characters and can contain letters, numbers, periods,
   underscores, or hyphens.
 - `-d`, `--directory`: Optional directory containing Nornir `config.yaml` and
-  inventory files. Defaults to `aos-3-tier`.
+  inventory files.
 
 ### Exit Codes
 
@@ -278,7 +279,7 @@ python scripts/ips.py
 Use another Nornir directory:
 
 ```bash
-python scripts/ips.py --directory aos-3-tier
+python scripts/ips.py --directory <nornir-directory>
 ```
 
 ### What Happens When It Runs
@@ -307,7 +308,7 @@ COMMAND = "show ip interface brief | i up"
 ### Arguments
 
 - `-d`, `--directory`: Optional directory containing Nornir `config.yaml` and
-  inventory files. Defaults to `aos-3-tier`.
+  inventory files.
 
 ### Exit Codes
 
