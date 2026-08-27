@@ -201,63 +201,6 @@ For example, using `--suffix ospf` writes
   no hosts were found.
 - `130`: The run was cancelled with `Ctrl+C`.
 
-## `configure_vlans.py`
-
-`configure_vlans.py` creates VLANs on inventory hosts whose host data contains
-`role: access_switch`.
-
-This script changes device configuration. Review the VLAN list and target host
-filter before running it.
-
-It sends these configuration commands:
-
-```text
-vlan 100
-name Engineering
-vlan 200
-name Sales
-vlan 300
-name Management
-exit
-```
-
-### Usage
-
-```bash
-python scripts/configure_vlans.py
-```
-
-### What Happens When It Runs
-
-1. Nornir loads the inventory from `config.yaml`.
-2. The inventory is filtered to hosts with `data.role` equal to
-   `access_switch`.
-3. The script connects to those hosts using Netmiko.
-4. It sends the VLAN configuration commands with `netmiko_send_config`.
-5. It prints detailed Nornir task results with `print_result`.
-
-### Customizing
-
-To change the target devices, edit the Nornir filter:
-
-```python
-switches = nr.filter(F(data__role="access_switch"))
-```
-
-To change the VLANs, edit the `vlan_config` list:
-
-```python
-vlan_config = [
-    "vlan 100",
-    "name Engineering",
-    "vlan 200",
-    "name Sales",
-    "vlan 300",
-    "name Management",
-    "exit",
-]
-```
-
 ## `icmp_test.py`
 
 `icmp_test.py` runs ICMP reachability checks from one or more inventory hosts
@@ -485,3 +428,60 @@ SHOW_VERSION_COMMAND = "show version"
 - `2`: Required configuration or inventory files were missing, or no hosts were
   found.
 - `130`: The run was cancelled with `Ctrl+C`.
+
+## `configure_vlans.py`
+
+`configure_vlans.py` creates VLANs on inventory hosts whose host data contains
+`role: access_switch`.
+
+This script changes device configuration. Review the VLAN list and target host
+filter before running it.
+
+It sends these configuration commands:
+
+```text
+vlan 100
+name Engineering
+vlan 200
+name Sales
+vlan 300
+name Management
+exit
+```
+
+### Usage
+
+```bash
+python scripts/configure_vlans.py
+```
+
+### What Happens When It Runs
+
+1. Nornir loads the inventory from `config.yaml`.
+2. The inventory is filtered to hosts with `data.role` equal to
+   `access_switch`.
+3. The script connects to those hosts using Netmiko.
+4. It sends the VLAN configuration commands with `netmiko_send_config`.
+5. It prints detailed Nornir task results with `print_result`.
+
+### Customizing
+
+To change the target devices, edit the Nornir filter:
+
+```python
+switches = nr.filter(F(data__role="access_switch"))
+```
+
+To change the VLANs, edit the `vlan_config` list:
+
+```python
+vlan_config = [
+    "vlan 100",
+    "name Engineering",
+    "vlan 200",
+    "name Sales",
+    "vlan 300",
+    "name Management",
+    "exit",
+]
+```
