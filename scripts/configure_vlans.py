@@ -1,11 +1,20 @@
 # scripts/configure_vlans.py
+import os
+from pathlib import Path
+
 from nornir import InitNornir
 from nornir_netmiko import netmiko_send_config
 from nornir_utils.plugins.functions import print_result
 from nornir.core.filter import F
 
+WORKSPACE_DIRECTORY = Path(__file__).resolve().parents[1]
+PROJECT_DIRECTORY = WORKSPACE_DIRECTORY / "aos-3-tier"
+CONFIG_FILE = PROJECT_DIRECTORY / "config.yaml"
+
 # Initialize Nornir with our config file
-nr = InitNornir(config_file="config.yaml")
+# Inventory paths in config.yaml are relative to the lab directory.
+os.chdir(PROJECT_DIRECTORY)
+nr = InitNornir(config_file=str(CONFIG_FILE))
 
 # Filter for only access switches
 switches = nr.filter(F(data__role="access_switch"))

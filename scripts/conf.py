@@ -1,5 +1,6 @@
 import os
 import sys
+from pathlib import Path
 from socket import timeout as SocketTimeout
 
 from netmiko.exceptions import (
@@ -20,7 +21,10 @@ COMMANDS = [
     "no page",
     "show running-config",
 ]
-OUTPUT_DIRECTORY = "outputs"
+WORKSPACE_DIRECTORY = Path(__file__).resolve().parents[1]
+PROJECT_DIRECTORY = WORKSPACE_DIRECTORY / "aos-3-tier"
+CONFIG_FILE = PROJECT_DIRECTORY / "config.yaml"
+OUTPUT_DIRECTORY = PROJECT_DIRECTORY / "outputs"
 
 AUTHENTICATION_ERRORS = (NetmikoAuthenticationException, AuthenticationException)
 TIMEOUT_ERRORS = (NetmikoTimeoutException, SocketTimeout, TimeoutError)
@@ -78,8 +82,8 @@ def run_commands_and_save(task: Task) -> Result:
         host_output.append(output or "[No output returned by device]")
         host_output.append("\n" + "=" * 40 + "\n")
 
-    os.makedirs(OUTPUT_DIRECTORY, exist_ok=True)
-    filename = os.path.join(OUTPUT_DIRECTORY, f"{task.host.name}_config.aos")
+    OUTPUT_DIRECTORY.mkdir(parents=True, exist_ok=True)
+    filename = OUTPUT_DIRECTORY / f"{task.host.name}_config.aos"
 
     with open(filename, "w", encoding="utf-8") as output_file:
         output_file.write("\n".join(host_output))
@@ -112,7 +116,9 @@ def main() -> int:
     nr = None
 
     try:
-        nr = InitNornir(config_file="config.yaml")
+        # Inventory paths in config.yaml are relative to the lab directory.
+        os.chdir(PROJECT_DIRECTORY)
+        nr = InitNornir(config_file=str(CONFIG_FILE))
         results = nr.run(task=run_commands_and_save)
 
         if not results:

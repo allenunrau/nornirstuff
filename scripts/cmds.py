@@ -19,7 +19,8 @@ from paramiko.ssh_exception import (
 )
 
 
-PROJECT_DIRECTORY = Path(__file__).resolve().parents[1]
+WORKSPACE_DIRECTORY = Path(__file__).resolve().parents[1]
+PROJECT_DIRECTORY = WORKSPACE_DIRECTORY / "aos-3-tier"
 CONFIG_FILE = PROJECT_DIRECTORY / "config.yaml"
 OUTPUT_DIRECTORY = PROJECT_DIRECTORY / "outputs"
 
@@ -56,6 +57,23 @@ def parse_arguments() -> argparse.Namespace:
         help="suffix added to output filenames, such as 'ospf'",
     )
     return parser.parse_args()
+
+
+def resolve_command_file(filename: Path) -> Path:
+    """Resolve command files from the current directory or the lab directory."""
+    command_file = filename.expanduser()
+    if command_file.is_absolute():
+        return command_file
+
+    current_directory_file = (Path.cwd() / command_file).resolve()
+    if current_directory_file.exists():
+        return current_directory_file
+
+    lab_directory_file = (PROJECT_DIRECTORY / command_file).resolve()
+    if lab_directory_file.exists():
+        return lab_directory_file
+
+    return current_directory_file
 
 
 def load_commands(filename: Path) -> list[str]:
@@ -182,7 +200,7 @@ def report_results(results) -> None:
 
 def main() -> int:
     args = parse_arguments()
-    command_file = args.command_file.expanduser().resolve()
+    command_file = resolve_command_file(args.command_file)
     nr = None
 
     try:
