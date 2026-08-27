@@ -26,8 +26,9 @@ cd /path/to/nornirstuff
 The current lab inventory uses the `aruba_aoscx` Netmiko device type for hosts
 in the `switches` group.
 
-Use `--directory` or `-d` with `cmds.py`, `conf.py`, and `ips.py` to choose the
-Nornir directory that contains `config.yaml` and the inventory files.
+Use `--directory` or `-d` with `cmds.py`, `conf.py`, `icmp_test.py`, and
+`ips.py` to choose the Nornir directory that contains `config.yaml` and the
+inventory files.
 
 ## Common Troubleshooting
 
@@ -256,6 +257,130 @@ vlan_config = [
     "exit",
 ]
 ```
+
+## `icmp_test.py`
+
+`icmp_test.py` runs ICMP reachability checks from one or more inventory hosts
+to one or more target IP addresses or FQDNs. Each source host tests every
+target, and each source-target pair is reported as a separate `PASS` or `FAIL`
+test case.
+
+The source host can be an inventory host name or an inventory `hostname` value,
+such as a management IP address.
+
+Source and target files must be UTF-8 text files. Blank lines are ignored, and
+lines that start with `#` are treated as comments.
+
+Each source-file line starts with a source device. Optional interface or VLAN
+sources can follow the device on the same line. Each listed interface or VLAN is
+tested independently against every target. Values can be separated with spaces
+or commas. VLAN sources can be written as `vlan10`, `vlan 10`, or just `10`.
+
+Example source file:
+
+```text
+core1 1/1/1 loopback0 vlan10
+core2
+core3 interface 1/1/2 vlan 20
+```
+
+In the example above, `core1` pings every target from `1/1/1`, `loopback0`, and
+`vlan10`; `core2` pings every target with the device default source; and
+`core3` pings every target from `1/1/2` and `vlan20`.
+
+### Usage
+
+Run pings from an inventory host:
+
+```bash
+python scripts/icmp_test.py core1 10.255.0.2 10.255.0.3
+```
+
+Run pings from every source in a file to every target in a file:
+
+```bash
+python scripts/icmp_test.py --source-file sources.txt --target-file targets.txt
+```
+
+Run pings from every source in a file to targets listed on the command line:
+
+```bash
+python scripts/icmp_test.py --source-file sources.txt 10.255.0.2 10.255.0.3
+```
+
+Run from a selected Nornir directory:
+
+```bash
+python scripts/icmp_test.py --directory <nornir-directory> \
+    --source-file sources.txt --target-file targets.txt
+```
+
+Use a source interface:
+
+```bash
+python scripts/icmp_test.py core1 --source-interface loopback0 10.255.0.2
+```
+
+Use a source VLAN:
+
+```bash
+python scripts/icmp_test.py core1 --source-vlan 10 10.255.0.2
+```
+
+### What Happens When It Runs
+
+1. Nornir loads the inventory from `config.yaml`.
+2. The script loads sources and targets from command-line values, files, or
+   both.
+3. It finds each requested source host by inventory name or hostname/IP.
+4. It expands any source-file interfaces or VLANs into separate source-target
+   checks.
+5. It prints a pre-flight summary with source, target, and planned check
+   counts.
+6. It adds a source interface, source VLAN, raw source value, or VRF when
+   requested.
+7. It builds and runs each ping with Netmiko from the matching source host.
+8. After each source device finishes, it parses packet statistics and prints
+   that device's `PASS` or `FAIL` results.
+9. It exits with failure if any source-target pair does not meet the allowed
+   packet loss.
+
+### Arguments
+
+- `source_host`: Optional inventory host name or inventory hostname/IP that
+  sends the pings. Required when `--source-file` is not used.
+- `targets`: Optional list of target IP addresses or FQDNs. Required when
+  `--target-file` is not used.
+- `-d`, `--directory`: Optional directory containing Nornir `config.yaml` and
+  inventory files.
+- `-c`, `--count`: Number of ICMP echo requests per target. Defaults to `5`.
+- `-t`, `--timeout`: Seconds to wait for each reply. Defaults to `2`.
+- `--max-loss`: Maximum allowed packet loss percentage. Defaults to `0`.
+- `--vrf`: Optional VRF for the ping command.
+- `--source-file`: Optional text file containing source inventory host names or
+  inventory hostnames/IPs, with optional interfaces or VLANs after each source.
+- `--target-file`: Optional text file containing target IP addresses or FQDNs,
+  one per line.
+- `--source`: Optional raw source IP address or interface name passed directly
+  to the ping command. Applies to source-file rows that do not include their own
+  interface or VLAN list.
+- `--source-interface`: Optional source interface name, such as `1/1/1`,
+  `loopback0`, or `vlan10`. Applies to source-file rows that do not include
+  their own interface or VLAN list.
+- `--source-vlan`: Optional source VLAN ID. This is converted to `vlan<ID>`.
+  Applies to source-file rows that do not include their own interface or VLAN
+  list.
+- `--show-output`: Print raw ping output `never`, on `failures`, or `always`.
+  Defaults to `failures`.
+
+### Exit Codes
+
+- `0`: All source-target checks passed.
+- `1`: One or more source-target checks failed, or an unexpected error
+  occurred.
+- `2`: The Nornir directory, configuration, inventory, or ICMP test input was
+  invalid.
+- `130`: The run was cancelled with `Ctrl+C`.
 
 ## `ips.py`
 
