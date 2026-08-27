@@ -20,9 +20,7 @@ from paramiko.ssh_exception import (
 
 
 WORKSPACE_DIRECTORY = Path(__file__).resolve().parents[1]
-PROJECT_DIRECTORY = WORKSPACE_DIRECTORY / "aos-3-tier"
-CONFIG_FILE = PROJECT_DIRECTORY / "config.yaml"
-OUTPUT_DIRECTORY = PROJECT_DIRECTORY / "outputs"
+DEFAULT_NORNIR_DIRECTORY = WORKSPACE_DIRECTORY / "aos-3-tier"
 
 AUTHENTICATION_ERRORS = (NetmikoAuthenticationException, AuthenticationException)
 TIMEOUT_ERRORS = (NetmikoTimeoutException, SocketTimeout, TimeoutError)
@@ -56,11 +54,38 @@ def parse_arguments() -> argparse.Namespace:
         default=None,
         help="suffix added to output filenames, such as 'ospf'",
     )
+    parser.add_argument(
+        "-d",
+        "--directory",
+        type=Path,
+        default=DEFAULT_NORNIR_DIRECTORY,
+        help=(
+            "directory containing Nornir config.yaml and inventory/ "
+            "(default: aos-3-tier)"
+        ),
+    )
     return parser.parse_args()
 
 
-def resolve_command_file(filename: Path) -> Path:
-    """Resolve command files from the current directory or the lab directory."""
+def resolve_nornir_directory(directory: Path) -> Path:
+    """Resolve a Nornir directory from the current directory or workspace root."""
+    nornir_directory = directory.expanduser()
+    if nornir_directory.is_absolute():
+        return nornir_directory.resolve()
+
+    current_directory = (Path.cwd() / nornir_directory).resolve()
+    if current_directory.exists():
+        return current_directory
+
+    workspace_directory = (WORKSPACE_DIRECTORY / nornir_directory).resolve()
+    if workspace_directory.exists():
+        return workspace_directory
+
+    return current_directory
+
+
+def resolve_command_file(filename: Path, nornir_directory: Path) -> Path:
+    """Resolve command files from the current directory or Nornir directory."""
     command_file = filename.expanduser()
     if command_file.is_absolute():
         return command_file
@@ -69,9 +94,9 @@ def resolve_command_file(filename: Path) -> Path:
     if current_directory_file.exists():
         return current_directory_file
 
-    lab_directory_file = (PROJECT_DIRECTORY / command_file).resolve()
-    if lab_directory_file.exists():
-        return lab_directory_file
+    nornir_directory_file = (nornir_directory / command_file).resolve()
+    if nornir_directory_file.exists():
+        return nornir_directory_file
 
     return current_directory_file
 
@@ -133,6 +158,7 @@ def get_exception(results) -> BaseException | None:
 def run_commands_and_save(
     task: Task,
     commands: list[str],
+    output_directory: Path,
     filename_suffix: str | None = None,
 ) -> Result:
     """Run commands and write the results to a per-host output file."""
@@ -161,9 +187,9 @@ def run_commands_and_save(
         host_output.append(output or "[No output returned by device]")
         host_output.append("\n" + "=" * 40 + "\n")
 
-    OUTPUT_DIRECTORY.mkdir(parents=True, exist_ok=True)
+    output_directory.mkdir(parents=True, exist_ok=True)
     suffix = f"_{filename_suffix}" if filename_suffix else ""
-    filename = OUTPUT_DIRECTORY / f"{task.host.name}_output{suffix}.txt"
+    filename = output_directory / f"{task.host.name}_output{suffix}.txt"
     filename.write_text("\n".join(host_output), encoding="utf-8")
 
     if command_error is not None:
@@ -200,18 +226,22 @@ def report_results(results) -> None:
 
 def main() -> int:
     args = parse_arguments()
-    command_file = resolve_command_file(args.command_file)
+    nornir_directory = resolve_nornir_directory(args.directory)
+    config_file = nornir_directory / "config.yaml"
+    output_directory = nornir_directory / "outputs"
+    command_file = resolve_command_file(args.command_file, nornir_directory)
     nr = None
 
     try:
         commands = load_commands(command_file)
 
-        # Inventory paths in config.yaml are relative to the project directory.
-        os.chdir(PROJECT_DIRECTORY)
-        nr = InitNornir(config_file=str(CONFIG_FILE))
+        # Inventory paths in config.yaml are relative to the Nornir directory.
+        os.chdir(nornir_directory)
+        nr = InitNornir(config_file=str(config_file))
         results = nr.run(
             task=run_commands_and_save,
             commands=commands,
+            output_directory=output_directory,
             filename_suffix=args.suffix,
         )
 
@@ -226,6 +256,9 @@ def main() -> int:
         return 130
     except FileNotFoundError as exc:
         print(f"File not found: {exc.filename or exc}", file=sys.stderr)
+        return 2
+    except NotADirectoryError as exc:
+        print(f"Invalid Nornir directory: {exc}", file=sys.stderr)
         return 2
     except (PermissionError, IsADirectoryError, ValueError) as exc:
         print(f"Invalid command file: {exc}", file=sys.stderr)

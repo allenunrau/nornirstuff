@@ -26,6 +26,10 @@ cd nornirstuff
 The lab inventory uses the `aruba_aoscx` Netmiko device type for hosts in the
 `switches` group.
 
+By default, `cmds.py`, `conf.py`, and `ips.py` use `aos-3-tier` as the Nornir
+directory. Pass `--directory` or `-d` to point one of those scripts at another
+directory containing `config.yaml` and the inventory files.
+
 ## Common Troubleshooting
 
 - `Configuration or inventory file not found`: Run the script from
@@ -64,6 +68,12 @@ For example, `core1` is saved as `aos-3-tier/outputs/core1_config.aos`.
 python scripts/conf.py
 ```
 
+Use another Nornir directory:
+
+```bash
+python scripts/conf.py --directory aos-3-tier
+```
+
 ### What Happens When It Runs
 
 1. Nornir loads the inventory from `config.yaml`.
@@ -95,8 +105,13 @@ COMMANDS = [
 To change where backups are saved, edit:
 
 ```python
-OUTPUT_DIRECTORY = PROJECT_DIRECTORY / "outputs"
+output_directory = nornir_directory / "outputs"
 ```
+
+### Arguments
+
+- `-d`, `--directory`: Optional directory containing Nornir `config.yaml` and
+  inventory files. Defaults to `aos-3-tier`.
 
 ### Exit Codes
 
@@ -116,8 +131,8 @@ Command files must be UTF-8 text files. Blank lines are ignored, and lines that
 start with `#` are treated as comments.
 
 Relative command file paths are checked from the current directory first and
-then from `aos-3-tier/`, so the existing lab command files can still be passed
-by filename.
+then from the selected Nornir directory, so the existing lab command files can
+still be passed by filename when using the default `aos-3-tier` directory.
 
 Example command file:
 
@@ -132,6 +147,12 @@ show ip ospf nei
 
 ```bash
 python scripts/cmds.py cmds_ospf
+```
+
+Use another Nornir directory:
+
+```bash
+python scripts/cmds.py --directory aos-3-tier cmds_ospf
 ```
 
 Add a filename suffix with `--suffix` or `-s`:
@@ -167,6 +188,8 @@ For example, using `--suffix ospf` writes
 - `-s`, `--suffix`: Optional suffix added to output filenames. The suffix must
   be 1 to 64 characters and can contain letters, numbers, periods,
   underscores, or hyphens.
+- `-d`, `--directory`: Optional directory containing Nornir `config.yaml` and
+  inventory files. Defaults to `aos-3-tier`.
 
 ### Exit Codes
 
@@ -252,6 +275,12 @@ The command filters for interfaces containing `up` in the output.
 python scripts/ips.py
 ```
 
+Use another Nornir directory:
+
+```bash
+python scripts/ips.py --directory aos-3-tier
+```
+
 ### What Happens When It Runs
 
 1. Nornir loads the inventory from `config.yaml`.
@@ -274,6 +303,11 @@ To check a different interface command, edit:
 ```python
 COMMAND = "show ip interface brief | i up"
 ```
+
+### Arguments
+
+- `-d`, `--directory`: Optional directory containing Nornir `config.yaml` and
+  inventory files. Defaults to `aos-3-tier`.
 
 ### Exit Codes
 

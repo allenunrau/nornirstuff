@@ -1774,3 +1774,5 @@ Device settings: aruba_aoscx 10.1.1.64:22
 2026-08-19 17:55:05,483 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
 2026-08-27 13:26:59,943 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {} on 6 hosts
 2026-08-27 13:27:03,760 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
+2026-08-27 13:38:41,035 -  nornir.core -     INFO -        run() - Running task 'run_commands_and_save' with args {'output_directory': PosixPath('/home/alu/nornirstuff/aos-3-tier/outputs')} on 6 hosts
+2026-08-27 13:38:43,490 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 6 hosts
