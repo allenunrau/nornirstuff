@@ -47,6 +47,19 @@ TIMEOUT_ERRORS = (NetmikoTimeoutException, SocketTimeout, TimeoutError)
 CONNECTION_ERRORS = (NoValidConnectionsError, ConnectionError, EOFError, OSError)
 
 
+HELP_EPILOG = """examples:
+  python scripts/icmp_test.py core1 10.255.0.2 10.255.0.3
+  python scripts/icmp_test.py --source-file source --target-file targets
+  python scripts/icmp_test.py --source-file source 10.255.0.2 10.255.0.3
+  python scripts/icmp_test.py core1 --source-interface loopback0 10.255.0.2
+
+source-file format:
+  core1 1/1/1 loopback0 vlan10
+  core2
+  core3 interface 1/1/2 vlan 20
+"""
+
+
 @dataclass(frozen=True)
 class IcmpCheck:
     target: str
@@ -61,6 +74,35 @@ class IcmpCheck:
 class SourceRequest:
     host: str
     source: str | None = None
+
+
+def argument_error_help(prog: str) -> str:
+    return f"""Expected input:
+  {prog} SOURCE_HOST TARGET [TARGET ...]
+  {prog} --source-file SOURCE_FILE --target-file TARGET_FILE
+  {prog} --source-file SOURCE_FILE TARGET [TARGET ...]
+
+Source-file lines start with a source inventory host, then optional interfaces
+or VLANs. Examples: 'core1 1/1/1 loopback0 vlan10' or 'core3 vlan 20'.
+
+Run '{prog} --help' for all options."""
+
+
+def file_input_help() -> str:
+    return (
+        "Source-file format: SOURCE_HOST [INTERFACE_OR_VLAN ...], for example "
+        "'core1 1/1/1 loopback0 vlan10'. Target files contain one or more "
+        "target IP addresses or FQDNs."
+    )
+
+
+class IcmpArgumentParser(argparse.ArgumentParser):
+    def error(self, message: str) -> None:
+        self.print_usage(sys.stderr)
+        self.exit(
+            2,
+            f"\nArgument error: {message}\n\n{argument_error_help(self.prog)}\n",
+        )
 
 
 def valid_cli_token(value: str) -> str:
@@ -132,8 +174,10 @@ def valid_vlan(value: str) -> int:
 
 
 def parse_arguments() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Run ICMP reachability tests from one or more Nornir hosts."
+    parser = IcmpArgumentParser(
+        description="Run ICMP reachability tests from one or more Nornir hosts.",
+        epilog=HELP_EPILOG,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
         "source_host",
@@ -224,10 +268,39 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "--show-output",
         choices=("never", "failures", "always"),
-        default="failures",
-        help="when to print raw ping output (default: failures)",
+        default="never",
+        help="when to print raw ping output (default: never)",
     )
-    return parser.parse_args()
+    args = parser.parse_args()
+    validate_argument_combinations(args, parser)
+    return args
+
+
+def validate_argument_combinations(
+    args: argparse.Namespace,
+    parser: argparse.ArgumentParser,
+) -> None:
+    if args.source_file is None and args.source_host is None:
+        parser.error(
+            "missing source host: provide SOURCE_HOST or use --source-file SOURCE_FILE"
+        )
+
+    if args.target_file is not None:
+        return
+
+    if args.source_file is not None:
+        if args.source_host is None and not args.targets:
+            parser.error(
+                "missing target: provide one or more targets after --source-file, "
+                "or use --target-file TARGET_FILE"
+            )
+        return
+
+    if not args.targets:
+        parser.error(
+            "missing target: provide at least one TARGET after SOURCE_HOST, "
+            "or use --target-file TARGET_FILE"
+        )
 
 
 def resolve_nornir_directory(directory: Path) -> Path:
@@ -572,6 +645,22 @@ def get_exception(results) -> BaseException | None:
     )
 
 
+def format_available_hosts(nr, limit: int = 20) -> str:
+    host_descriptions = []
+    for host in sorted(nr.inventory.hosts.values(), key=lambda item: item.name):
+        if host.hostname:
+            host_descriptions.append(f"{host.name} ({host.hostname})")
+        else:
+            host_descriptions.append(host.name)
+
+    if len(host_descriptions) > limit:
+        remaining_count = len(host_descriptions) - limit
+        host_descriptions = host_descriptions[:limit]
+        host_descriptions.append(f"... and {remaining_count} more")
+
+    return ", ".join(host_descriptions)
+
+
 def find_source_host(nr, source_host: str):
     """Find one inventory host matching a name or hostname/IP."""
     source_host_lower = source_host.lower()
@@ -586,8 +675,10 @@ def find_source_host(nr, source_host: str):
     ]
 
     if not matches:
+        available_hosts = format_available_hosts(nr)
         raise ValueError(
-            f"source host not found in inventory by name or hostname/IP: {source_host}"
+            "source host not found in inventory by name or hostname/IP: "
+            f"{source_host}. Available hosts: {available_hosts}"
         )
     if len(matches) > 1:
         names = ", ".join(sorted(host.name for host in matches))
@@ -854,13 +945,19 @@ def main() -> int:
         print("\nOperation cancelled by user.", file=sys.stderr)
         return 130
     except FileNotFoundError as exc:
-        print(f"Configuration or inventory file not found: {exc}", file=sys.stderr)
+        print(f"File not found: {exc.filename or exc}", file=sys.stderr)
+        print(
+            "Check --directory, --source-file, --target-file, and the inventory "
+            "paths in config.yaml.",
+            file=sys.stderr,
+        )
         return 2
     except NotADirectoryError as exc:
         print(f"Invalid Nornir directory: {exc}", file=sys.stderr)
         return 2
     except ValueError as exc:
         print(f"Invalid ICMP test input: {exc}", file=sys.stderr)
+        print(file_input_help(), file=sys.stderr)
         return 2
     except Exception as exc:
         category = describe_error(exc)

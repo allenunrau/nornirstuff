@@ -314,7 +314,7 @@ python scripts/icmp_test.py core1 --source-vlan 10 10.255.0.2
   Applies to source-file rows that do not include their own interface or VLAN
   list.
 - `--show-output`: Print raw ping output `never`, on `failures`, or `always`.
-  Defaults to `failures`.
+  Defaults to `never`.
 
 ### Exit Codes
 
