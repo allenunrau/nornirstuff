@@ -1,0 +1,24 @@
+# inventory/hosts.yaml
+sw1-50:
+  hostname: 10.1.1.50
+  groups:
+    - switches
+    - access
+  data:
+    role: access_switch
+    location: gns3, aox-cx-2-switch
+    gns3_project: aox-cx-2 switch
+    gns3_project_id: 2975904a-a7a3-4d48-9fe1-4111876e8eda
+    gns3_node_id: 6d3ca74b-0c98-42c6-ba18-94669b96bad7
+
+sw2-51:
+  hostname: 10.1.1.51
+  groups:
+    - switches
+    - access
+  data:
+    role: access_switch
+    location: gns3, aox-cx-2-switch
+    gns3_project: aox-cx-2 switch
+    gns3_project_id: 2975904a-a7a3-4d48-9fe1-4111876e8eda
+    gns3_node_id: 56bef654-4d79-4e6c-91b7-4f41e68d08a2
