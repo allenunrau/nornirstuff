@@ -1,2 +1,3 @@
 outputs/
 aos-3-tier/nornir.log
+__pycache__/*

@@ -1,3 +1,23 @@
+#
+# cmds.py
+#
+# Runs commands from a UTF-8 text file against every host in a Nornir inventory.
+# Blank lines and lines beginning with "#" are ignored. Each host's command
+# output is saved to <nornir-directory>/outputs/<host>_output[_suffix].txt.
+#
+# CLI usage:
+#   python scripts/cmds.py COMMAND_FILE [-s SUFFIX] [-d NORNIR_DIRECTORY]
+#
+# Required arguments:
+#   COMMAND_FILE
+#       Text file containing one command per line.
+#
+# Options:
+#   -s, --suffix SUFFIX
+#       Optional suffix for output filenames, such as "ospf".
+#   -d, --directory NORNIR_DIRECTORY
+#       Directory containing config.yaml and inventory/. Defaults to aos-3-tier.
+#
 import argparse
 import os
 import re

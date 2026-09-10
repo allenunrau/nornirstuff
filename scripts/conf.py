@@ -1,3 +1,17 @@
+#
+# conf.py
+#
+# Backs up running configuration output from every host in a Nornir inventory.
+# For each host, the script runs "no page" and "show running-config", then
+# writes the captured output to <nornir-directory>/outputs/<host>_config.aos.
+#
+# CLI usage:
+#   python scripts/conf.py [-d NORNIR_DIRECTORY]
+#
+# Options:
+#   -d, --directory NORNIR_DIRECTORY
+#       Directory containing config.yaml and inventory/. Defaults to aos-3-tier.
+#
 import argparse
 import os
 import sys

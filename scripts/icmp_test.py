@@ -1,3 +1,46 @@
+#
+# icmp_test.py
+#
+# Runs ICMP reachability tests from one or more Nornir inventory hosts to one or
+# more target IP addresses or FQDNs. The script builds AOS-CX ping or ping6
+# commands, supports per-host source interfaces/VLANs from a source file, prints
+# PASS/FAIL summaries, and can optionally show raw ping output.
+#
+# CLI usage:
+#   python scripts/icmp_test.py SOURCE_HOST TARGET [TARGET ...] [options]
+#   python scripts/icmp_test.py --source-file SOURCE_FILE --target-file TARGET_FILE [options]
+#   python scripts/icmp_test.py --source-file SOURCE_FILE TARGET [TARGET ...] [options]
+#
+# Positional arguments:
+#   SOURCE_HOST
+#       Inventory host name or device hostname/IP to run pings from.
+#   TARGET
+#       Target IP address or FQDN to ping. Multiple targets are allowed.
+#
+# Options:
+#   -d, --directory NORNIR_DIRECTORY
+#       Directory containing config.yaml and inventory/. Defaults to aos-3-tier.
+#   -c, --count COUNT
+#       ICMP echo requests per target. Defaults to 5.
+#   -t, --timeout SECONDS
+#       Seconds to wait for each reply. Defaults to 2.
+#   --max-loss PERCENT
+#       Maximum allowed packet loss percentage. Defaults to 0.
+#   --vrf VRF
+#       VRF to include in each ping command.
+#   --source-file SOURCE_FILE
+#       File containing source hosts with optional interfaces or VLANs.
+#   --target-file TARGET_FILE
+#       File containing target IP addresses or FQDNs.
+#   --source SOURCE
+#       Source IP address or interface name passed directly to ping.
+#   --source-interface INTERFACE
+#       Source interface name, such as 1/1/1, loopback0, or vlan10.
+#   --source-vlan VLAN_ID
+#       Source VLAN ID converted to vlan<ID>.
+#   --show-output {never,failures,always}
+#       When to print raw ping output. Defaults to never.
+#
 import argparse
 import ipaddress
 import os

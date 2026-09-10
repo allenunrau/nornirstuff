@@ -1,4 +1,16 @@
-# scripts/configure_vlans.py
+#
+# configure_vlans.py
+#
+# Adds VLAN 100, VLAN 200, and VLAN 300 to Nornir inventory hosts whose
+# host data role is "access_switch". The script uses the lab Nornir config at
+# aos-3-tier/config.yaml and sends the configured VLAN commands with Netmiko.
+#
+# CLI usage:
+#   python scripts/configure_vlans.py
+#
+# Options:
+#   None. Edit vlan_config in this file to change the VLANs that are pushed.
+#
 import os
 from pathlib import Path
 

@@ -1,3 +1,16 @@
+#
+# ver.py
+#
+# Runs "show version" against every host in the lab Nornir inventory and prints
+# each device's command output. Connection, authentication, and command failures
+# are summarized per failed host.
+#
+# CLI usage:
+#   python scripts/ver.py
+#
+# Options:
+#   None. The script uses aos-3-tier/config.yaml.
+#
 import os
 import sys
 from pathlib import Path

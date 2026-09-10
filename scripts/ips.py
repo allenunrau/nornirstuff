@@ -1,3 +1,16 @@
+#
+# ips.py
+#
+# Shows active IP interfaces for every host in a Nornir inventory by running
+# "show ip interface brief | i up" and printing each device's matching output.
+#
+# CLI usage:
+#   python scripts/ips.py [-d NORNIR_DIRECTORY]
+#
+# Options:
+#   -d, --directory NORNIR_DIRECTORY
+#       Directory containing config.yaml and inventory/. Defaults to aos-3-tier.
+#
 import argparse
 import os
 import sys

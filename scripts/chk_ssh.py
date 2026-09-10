@@ -1,3 +1,17 @@
+#
+# chk_ssh.py
+#
+# Checks SSH reachability for every host in the lab Nornir inventory by running
+# "show version". Successful hosts print a connectivity status and the first
+# output line that starts with "Version"; failed hosts print a red failure mark
+# and an error summary.
+#
+# CLI usage:
+#   python scripts/chk_ssh.py
+#
+# Options:
+#   None. The script uses aos-3-tier/config.yaml.
+#
 import os
 import sys
 from pathlib import Path
